@@ -4,8 +4,11 @@ class CalorieTracker {
     this._totalCalories = 0;
     this._meals = [];
     this._workouts = [];
+
+    this._displayCaloriesTotal();
   }
 
+  // public methods/api
   addMeal(meal) {
     this._meals.push(meal);
     this._totalCalories += meal.calories;
@@ -14,6 +17,12 @@ class CalorieTracker {
   addWorkout(workout) {
     this._workouts.push(workout);
     this._totalCalories -= workout.calories;
+  }
+
+  // private methods
+  _displayCaloriesTotal() {
+    const totalCaloriesEl = document.getElementById("calories-total");
+    totalCaloriesEl.innerHTML = this._totalCalories;
   }
 }
 
@@ -32,3 +41,11 @@ class Workout {
     this.calories = calories;
   }
 }
+
+const tracker = new CalorieTracker();
+
+const breakfast = new Meal("Breakfast", 400);
+tracker.addMeal(breakfast);
+
+const run = new Workout("Morning Run", 300);
+tracker.addWorkout(run);
