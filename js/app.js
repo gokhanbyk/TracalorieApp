@@ -121,12 +121,34 @@ class Workout {
   }
 }
 
-const tracker = new CalorieTracker();
+class App {
+  constructor() {
+    this._tracker = new CalorieTracker();
 
-const breakfast = new Meal("Breakfast", 400);
-const lunch = new Meal("Lunch", 350);
-tracker.addMeal(breakfast);
-tracker.addMeal(lunch);
+    document
+      .getElementById("meal-form")
+      .addEventListener("submit", this._newMeal.bind(this));
+  }
 
-const run = new Workout("Morning Run", 300);
-tracker.addWorkout(run);
+  _newMeal(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("meal-name");
+    const calories = document.getElementById("meal-calories");
+
+    // Validation
+    if (name.value === "" || calories.value === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const meal = new Meal(name.value, +calories.value);
+
+    this._tracker.addMeal(meal);
+
+    name.value = "";
+    calories.value = "";
+  }
+}
+
+const app = new App();
